@@ -16,6 +16,7 @@ export default function ProrataDaysOffCalculator() {
   const [daysWorked, setDaysWorked] = useState(null);
   const [result, setResult] = useState(null);
   const [formula, setFormula] = useState('');
+  const [calculationType, setCalculationType] = useState('');
 
   useEffect(() => {
     localStorage.setItem('year', year);
@@ -30,6 +31,7 @@ export default function ProrataDaysOffCalculator() {
   }, [year, month]);
 
   const calculateDaysOff = (type) => {
+    setCalculationType(type === 'join' ? 'New Joiner' : 'Termination');
     const monthIndex = monthNames.indexOf(month);
     const daysInMonth = getDaysInMonth(new Date(year, monthIndex));
     let calculatedDaysWorked;
@@ -124,13 +126,13 @@ export default function ProrataDaysOffCalculator() {
 
         {daysWorked !== null && (
           <div className="mt-4 p-4 bg-blue-100 rounded-xl text-center">
-            <strong>Days Worked:</strong> {daysWorked} days
+            <strong>{calculationType} - Days Worked:</strong> {daysWorked} days
           </div>
         )}
 
         {result !== null && (
           <div className="mt-4 p-4 bg-green-100 rounded-xl text-center">
-            <strong>Prorata Days Off:</strong> {result} days
+            <strong>{calculationType} - Prorata Days Off:</strong> {result} days
             <div className="text-sm text-gray-700 mt-2">Formula: {formula}</div>
           </div>
         )}
